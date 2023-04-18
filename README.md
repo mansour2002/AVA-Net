@@ -21,7 +21,7 @@ Dependencies
 - Python >= 3.7.1
 
 
-To obtain the trained weights of AVA-net, please feel free to contact the corresponding author via email (xcy@uic.edu), and tell us about your study. We can provide you with the necessary information and resources.
+To obtain the trained weights of AVA-Net, please feel free to contact the corresponding author via email (xcy@uic.edu), and tell us about your study. We can provide you with the necessary information and resources.
 
 
 Paper Link: https://www.nature.com/articles/s43856-023-00287-9
