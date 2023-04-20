@@ -1,6 +1,7 @@
 # AVA-Net
 Deep Learning for Arterial-Venous-Area (AVA) Segmentation using OCTA images. The implementation is using Python and TensorFlow.
 
+
 Overview
 ------------
 In this project, we present a fully convolutional network (FCN), AVA-Net, a U-Net-like architecture, for fully automated arterial-venous area (AVA) segmentation using OCT-angiography (OCTA) images. The AVA-Net architecture is illustrated below
