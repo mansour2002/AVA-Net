@@ -1,9 +1,11 @@
 # AVA-Net
-Deep Learning for Arterial-Venous-Area (AVA) Segmentation using OCTA images. The implementation is using Python and TensorFlow.
 
+**Deep Learning for Arterial-Venous-Area (AVA) Segmentation using OCTA images**  
+Implementation in Python and TensorFlow.
 
-Overview
-------------
+---
+## Overview
+
 In this project, we present a fully convolutional network (FCN), AVA-Net, a U-Net-like architecture, for fully automated arterial-venous area (AVA) segmentation using OCT-angiography (OCTA) images. The AVA-Net architecture is illustrated below
 ![The AVA-Net](https://github.com/mansour2002/AVA-Net/blob/main/Figures/Slide2.PNG?raw=true)
 
@@ -14,21 +16,97 @@ Images were acquired using the AngioVue SD-OCT device (Optovue, Fremont, CA, USA
 Figures (A) and (B) show a representative OCTA image and corresponding manually generated artery-vein (AV) map. For generating AVA maps, the k-nearest neighbor (kNN) classifier is used to classify background pixels as pixels in arterial or venous areas. The output of the kNN classifier is presented in Figure (C) with a lighter tone of blue and red compared to arteries and veins presented in Figure (B). The union of the arteries and veins with corresponding arterial and venous areas generates the AVA maps represented in Figure (D).
 ![The AVA-Net](https://github.com/mansour2002/AVA-Net/blob/main/Figures/Slide%201.png?raw=true)
 
+---
 
-Dependencies
-------------
-- Tensorflow >= 1.31.1
-- Keras >= 2.2.4
-- Python >= 3.7.1
+## Features
 
-
-To obtain the trained weights of AVA-Net, please feel free to contact the corresponding author via email (Prof. Xincheng Yao, xcy@uic.edu), and tell us about your study. We can provide you with the necessary information and resources.
-
-
-Paper Link: https://www.nature.com/articles/s43856-023-00287-9
+- **AVA-Net Model**: U-Net-like deep learning architecture for AVA segmentation.
+- **Custom Loss**: IoU-based loss function for robust training.
+- **Data Augmentation**: Integrated using `ImageDataGenerator`.
+- **Configurable Training**: Easily adjustable parameters in `config.py`.
 
 
-Citations
-------------
-Mansour Abtahi, David Le, Behrouz Ebrahimi, Albert K. Dadzie, Jennifer I. Lim & Xincheng Yao, "An open-source deep learning network AVA-Net for arterial-venous area segmentation in optical coherence tomography angiography". Communications Medicine, 3, 54 (2023). https://doi.org/10.1038/s43856-023-00287-9
+---
 
+## Project Structure
+
+```
+AVA-Net/
+├── training.py # Main training script
+├── config.py # Configuration file
+├── loss.py # Custom IoU loss and metrics
+├── AVA_Net.py # AVA-Net model definition
+├── requirements.txt # Python dependencies
+├── train_data.csv # Mapping input images to masks
+└── Dataset/
+├── Train Input/ # RGB input images
+└── Train Output/ # Grayscale mask images
+```
+
+---
+
+## Dependencies
+
+Requires **Python 3.7+**. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+## How to Run Training
+
+### 1. Prepare Dataset
+
+* Place RGB images in `Dataset/Train Input/`
+* Place grayscale masks in `Dataset/Train Output/`
+* Ensure `train_data.csv` has `Input` and `AV` columns
+
+### 2. Configure Parameters
+
+Edit `config.py`:
+
+* `IMAGE_HEIGHT`, `IMAGE_WIDTH`
+* `MAX_EPOCHS`, `BATCH_SIZE`
+* `PARENT_DIR` (if needed)
+
+### 3. Start Training
+
+```bash
+python training.py
+```
+
+---
+
+## Trained Weights
+
+To request trained AVA-Net weights, contact:
+
+**Prof. Xincheng Yao**
+📧 [xcy@uic.edu](mailto:xcy@uic.edu)
+Include your study details in the email.
+
+---
+
+## Paper
+
+Read the full paper:
+🔗 [Nature Communications Medicine](https://www.nature.com/articles/s43856-023-00287-9)
+
+---
+
+## Citation
+
+If you use this project, please cite:
+
+```bibtex
+@article{Abtahi2023AVANet,
+  title={An open-source deep learning network AVA-Net for arterial-venous area segmentation in optical coherence tomography angiography},
+  author={Abtahi, Mansour and Le, David and Ebrahimi, Behrouz and Dadzie, Albert K. and Lim, Jennifer I. and Yao, Xincheng},
+  journal={Communications Medicine},
+  volume={3},
+  pages={54},
+  year={2023},
+  publisher={Nature Publishing Group UK London},
+  doi={10.1038/s43856-023-00287-9}
+}
+```
