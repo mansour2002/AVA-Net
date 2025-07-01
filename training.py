@@ -161,30 +161,6 @@ def main():
     image_datagen.fit(X_train)
     mask_datagen.fit(y_train)
 
-    # Create data iterators from in-memory arrays (X_train, y_train)
-    # Using `flow` for in-memory arrays. `flow_from_dataframe` is typically for disk.
-    # The original code used flow_from_dataframe with directory argument, assuming images are not loaded in memory for generator,
-    # but then loaded them in memory using load_RGB_image and load_L_image.
-    # Let's align with the original intent of `flow_from_dataframe` to read from disk as it's more memory efficient for large datasets,
-    # but this contradicts the `fit(X_train)` and `fit(y_train)`.
-    # For professionalism and memory efficiency, if using `flow_from_dataframe`, don't pre-load all images into `X_train`, `y_train`.
-    # However, to keep changes minimal while addressing the prompt, I'll adapt to the existing `fit(X_train)`.
-    # If `fit` is not truly needed or if data is very large, `flow_from_directory` or custom generator is better.
-    # Given the original `flow_from_dataframe` pointing to `directory`, it's likely they intended reading from disk directly.
-    # I will adapt `load_RGB_image` and `load_L_image` to be more robust, but the `flow_from_dataframe` part seems to be the intended way to stream data.
-
-    # Re-evaluating original flow_from_dataframe with `batch_size=len(X_train)`:
-    # This means the generator yields the *entire dataset* as one batch. This is effectively
-    # the same as just training on `X_train` directly if data augmentation isn't per-batch.
-    # If the intent is to augment the *entire dataset* at once per step, this is okay.
-    # For more typical training with smaller batches, BATCH_SIZE from config should be used.
-    # Let's use `flow_from_dataframe` as originally intended, but use a proper BATCH_SIZE.
-
-    # Removed the X_train, y_train loading from the main function.
-    # The ImageDataGenerator `flow_from_dataframe` will handle loading.
-    # The `fit` calls are usually for feature-wise normalization if `featurewise_center` etc. are used,
-    # but with only `rescale` it's less critical. Keeping it for consistency with original.
-
     logging.info("Setting up data generators for training.")
     image_generator = image_datagen.flow_from_dataframe(
         df_train,
@@ -209,10 +185,7 @@ def main():
         shuffle=True # Shuffle masks identically to images
     )
 
-    # Combine image and mask generators using zip
-    # This assumes that the order of files from flow_from_dataframe is consistent,
-    # which it should be if `shuffle=True` and `seed` are the same, or if `shuffle=False`.
-    # For robustness, a custom `tf.data.Dataset` pipeline is often preferred for more control.
+
     train_generator = zip(image_generator, mask_generator)
 
     # --- Model Definition ---
