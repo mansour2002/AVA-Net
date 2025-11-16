@@ -5,7 +5,6 @@ This module provides an Intersection-over-Union (IoU) coefficient and its corres
 
 import tensorflow as tf
 from tensorflow.keras import backend as K
-from typing import Union
 
 def iou_coef_MC(y_true: tf.Tensor, y_pred: tf.Tensor) -> tf.Tensor:
     """

@@ -57,9 +57,28 @@ pip install -r requirements.txt
 
 ### 1. Prepare Dataset
 
-* Place RGB images in `Dataset/Train Input/`
-* Place grayscale masks in `Dataset/Train Output/`
-* Ensure `train_data.csv` has `Input` and `AV` columns
+#### Dataset Structure
+* Place RGB input images in `Dataset/Train Input/`
+* Place grayscale mask images in `Dataset/Train Output/`
+* Create a CSV file (default: `train_data.csv`) mapping inputs to outputs
+
+#### CSV Format
+The `train_data.csv` file must contain two columns:
+* `Input`: Filename of the RGB input image (e.g., `image001.png`)
+* `AV`: Filename of the corresponding grayscale mask (e.g., `mask001.png`)
+
+Example CSV content:
+```csv
+Input,AV
+image001.png,mask001.png
+image002.png,mask002.png
+image003.png,mask003.png
+```
+
+#### Image Requirements
+* **Input images**: RGB format (`.png`, `.jpg`, `.tif` supported)
+* **Mask images**: Grayscale format with pixel values in range [0, 1] or [0, 255]
+* Images can be any size; they will be resized to the dimensions specified in `config.py`
 
 ### 2. Configure Parameters
 

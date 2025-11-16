@@ -7,17 +7,15 @@ import os
 import pandas as pd
 import numpy as np
 import logging
-from typing import Tuple, Dict
+from typing import Tuple
 
 # Keras functions for data augmentation and model building
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.layers import Input
-from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 
 import segmentation_models as sm  # For segmentation metrics and models
 # skimage functions for image processing
-from skimage import io, transform, img_as_float # exposure, color not explicitly used, can be removed if not needed
+from skimage import io, transform
 
 # Import custom model and loss function
 from AVA_Net import AVA_Net
@@ -222,10 +220,11 @@ def main():
     )
 
     logging.info("Training completed.")
-    # Optional: Save the trained model
-    # model_save_path = os.path.join(PARENT_DIR, 'trained_ava_net.h5')
-    # model.save(model_save_path)
-    # logging.info(f"Model saved to: {model_save_path}")
+
+    # Save the trained model
+    model_save_path = os.path.join(PARENT_DIR, 'trained_ava_net.h5')
+    model.save(model_save_path)
+    logging.info(f"Model saved to: {model_save_path}")
 
 if __name__ == "__main__":
     main()
